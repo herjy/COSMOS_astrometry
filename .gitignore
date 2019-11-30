@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+cosmos_acs_iphot_200709.tbl
+COSMOS_s18a_dud_forced_starcatalog.csv
+COSMOS_s16a_udeep_forced_starcatalog.csv
+
 # Distribution / packaging
 .Python
 build/
