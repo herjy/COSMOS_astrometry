@@ -86,18 +86,18 @@ def get_error(position, catalog, radius = None, N_star = 10, method = 'cubic'):
     if np.size(position.shape) > 1:
         errors = []
         for pos in position:
-            errors.append(get_error(pos, catalog, radius = None, N_star = 10, method = 'cubic'))
+            errors.append(get_error(pos, catalog, radius = None, N_star = N_star, method = 'cubic'))
         return np.array(errors)
     # Compute distances between catalog's stars an 'position'
     d = np.sqrt(np.sum((catalog[:, 0:2]-position[np.newaxis, :])**2, axis = 1))
     if radius is None:
-        cut = np.argsort(d)[::-1]
-        radius = cut[10]
+        cut = np.sort(d)
+        radius = cut[N_star]
     # Star used in the interpolation
     selection = catalog[d < radius,:]
-    Ra_error = sci.griddata(selection[:,0:2], selection[:,4], position, method=method)
-    Dec_error = sci.griddata(selection[:,0:2], selection[:,5], position, method=method)
-    return [Ra_error, Dec_error]
+    Ra_error = sci.griddata(selection[:,0:2], selection[:,-2], position, method=method)
+    Dec_error = sci.griddata(selection[:,0:2], selection[:,-1], position, method=method) 
+    return Ra_error, Dec_error
         
         
         
