@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.interpolate as sci
 import os
+import matplotlib
+matplotlib.rc('xtick', labelsize=15) 
+matplotlib.rc('ytick', labelsize=15) 
 
 def get_distances(coord_ref, coord2, rad):
     '''
@@ -154,9 +157,9 @@ def plot_results(mod, ang, xerr, yerr, vcoord, pixel = None, label = None, legen
             Produces plots of the results
     '''
     plt.figure(init+1, figsize=(20,9))
-    plt.suptitle(legend, fontsize = 15)
+    plt.suptitle(legend, fontsize = 25)
     plt.subplot(211)
-    plt.title('modulus distribution', fontsize = 15)
+    plt.title('modulus distribution', fontsize = 25)
     plt.hist(mod*3600., bins=30)
     if pixel is not None:
         for count, p in enumerate(pixel):
@@ -171,30 +174,44 @@ def plot_results(mod, ang, xerr, yerr, vcoord, pixel = None, label = None, legen
     plt.figure(init+2, figsize=(20,7))
     plt.suptitle(legend, fontsize = 15)
     plt.subplot(122)
-    plt.title('modulus across the field', fontsize = 15)
+    plt.title('modulus across the field', fontsize = 25)
     plt.scatter(vcoord[:, 0], vcoord[:, 1], c=mod*3600., s=15, cmap='gist_stern')
+    plt.xlabel('Ra', fontsize = 20)
+    plt.ylabel('Dec', fontsize = 20)
 
     # plt.plot(garbage[:,0], garbage[:,1], 'ok', markersize =1)
-    plt.colorbar()
+    cbar = plt.colorbar()
+    cbar.set_label('distance modulus (arcsec)', rotation=270, fontsize = 20, labelpad = 20)
 
     plt.subplot(121)
-    plt.title('angles across the field', fontsize = 15)
+    plt.title('angles across the field', fontsize = 25)
     plt.scatter(vcoord[:, 0], vcoord[:, 1], c=ang, s=13, cmap='twilight')
+    plt.xlabel('Ra', fontsize = 20)
+    plt.ylabel('Dec', fontsize = 20)
+
     # plt.plot(garbage[:,0], garbage[:,1], 'ok', markersize =1)
-    plt.colorbar()
+    cbar = plt.colorbar()
+    cbar.set_label('distance argument (arcsec)', rotation=270, fontsize = 20, labelpad = 20)
 
     plt.figure(init+3, figsize=(20,7))
     plt.suptitle(legend, fontsize = 15)
     plt.subplot(122)
-    plt.title('distance along x-axis', fontsize = 15)
+    plt.title('distance along x-axis', fontsize = 25)
     plt.scatter(vcoord[:, 0], vcoord[:, 1], c=xerr*3600., s=15, cmap='gist_stern')
-
+    plt.xlabel('Ra', fontsize = 20)
+    plt.ylabel('Dec', fontsize = 20)
     # plt.plot(garbage[:,0], garbage[:,1], 'ok', markersize =1)
-    plt.colorbar()
+
+    cbar = plt.colorbar()
+    cbar.set_label('Dec-distance (arcsec)', rotation=270, fontsize = 20, labelpad = 20)
 
     plt.subplot(121)
-    plt.title('distance along y-axis', fontsize = 15)
+    plt.title('distance along y-axis', fontsize = 25)
     plt.scatter(vcoord[:, 0], vcoord[:, 1], c=yerr*3600, s=13, cmap='gist_stern')
+    plt.xlabel('Ra', fontsize = 20)
+    plt.ylabel('Dec', fontsize = 20)
+
     # plt.plot(garbage[:,0], garbage[:,1], 'ok', markersize =1)
-    plt.colorbar()
+    cbar = plt.colorbar()
+    cbar.set_label('Ra-distance (arcsec)', rotation=270, fontsize = 20, labelpad = 20)
     return None
